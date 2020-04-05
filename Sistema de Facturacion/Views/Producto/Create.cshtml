@@ -1,16 +1,17 @@
-﻿@model Sistema_de_Facturacion.Models.Producto
+﻿
+@model Sistema_de_Facturacion.Models.Producto
 
 @{
-    ViewBag.Title = "Create";
+ViewBag.Title = "Create";
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Producto</h4>
         <hr />

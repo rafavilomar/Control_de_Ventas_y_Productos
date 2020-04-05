@@ -38,7 +38,7 @@ namespace Sistema_de_Facturacion.Controllers
         // GET: Producto/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Producto/Create
