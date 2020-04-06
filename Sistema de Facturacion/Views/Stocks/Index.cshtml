@@ -9,6 +9,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<form action="\Stocks" method="post">
+    @Html.TextBox("producto")
+    @Html.TextBox("fecha")
+    @Html.TextBox("proveedor")
+    <input type="submit" value="BUSCAR" />
+</form>
 <table class="table">
     <tr>
         <th>

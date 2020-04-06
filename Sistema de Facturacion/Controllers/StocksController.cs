@@ -20,7 +20,52 @@ namespace Sistema_de_Facturacion.Controllers
             var stocks = db.Stocks.Include(s => s.Producto).Include(s => s.Proveedore);
             return View(stocks.ToList());
         }
-
+        [HttpPost]
+        public ActionResult Index(string producto, DateTime? fecha, string proveedor)
+        {
+            if (producto == string.Empty && !fecha.HasValue && proveedor== string.Empty)
+            {
+                return View(db.Stocks.ToList());
+            }
+            else
+            {
+                if (producto != string.Empty && !fecha.HasValue && proveedor == string.Empty)
+                {
+                    var abc = from a in db.Stocks
+                              join b in db.Productos on a.idProducto equals b.id
+                              where b.Nombre == producto
+                              orderby a.idProducto
+                              select a;
+                    return View(abc);
+                }
+                else if (producto == string.Empty && !fecha.HasValue && proveedor != string.Empty)
+                {
+                    var abc = from a in db.Stocks
+                              join b in db.Proveedores on a.idProveedores equals b.id
+                              where b.Nombre == proveedor
+                              orderby a.idProveedores
+                              select a;
+                    return View(abc);
+                }
+                else if (producto == string.Empty && fecha.HasValue && proveedor == string.Empty)
+                {
+                    var abc = from a in db.Stocks
+                              where a.Fecha == fecha
+                              orderby a.Fecha
+                              select a;
+                    return View(abc);
+                }
+                else
+                {
+                    var abc = from a in db.Stocks
+                              join b in db.Productos on a.idProducto equals b.id
+                              join c in db.Proveedores on a.idProveedores equals c.id
+                              where b.Nombre == producto && a.Fecha == fecha && c.Nombre == proveedor
+                              select a;
+                    return View(abc);
+                }
+            }
+        }
         // GET: Stocks/Details/5
         public ActionResult Details(int? id)
         {
