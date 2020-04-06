@@ -19,6 +19,24 @@ namespace Sistema_de_Facturacion.Controllers
         {
             return View(db.Productos.ToList());
         }
+        [HttpPost]
+        public ActionResult Index(string busqueda)
+        {
+            if (busqueda == string.Empty)
+            {
+                return View(db.Productos.ToList());
+            }
+            else
+            {
+                var abc = from a in db.Productos
+                          where a.Nombre == busqueda
+                          select a;
+
+                
+
+                return View(abc);
+            }
+        }
 
         // GET: Producto/Details/5
         public ActionResult Details(int? id)
