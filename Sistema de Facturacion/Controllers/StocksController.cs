@@ -21,10 +21,16 @@ namespace Sistema_de_Facturacion.Controllers
             return View(stocks.ToList());
         }
         [HttpPost]
-        public ActionResult Index(string producto, DateTime? fecha, string proveedor)
+        public ActionResult Index(string producto, DateTime? fecha, string proveedor, bool sumatoria, bool conteo, bool promedio)
         {
+            ViewBag.Sumatoria="";
+            ViewBag.Conteo = "";
+            ViewBag.Promedio = "";
             if (producto == string.Empty && !fecha.HasValue && proveedor== string.Empty)
             {
+                if (sumatoria == true) { ViewBag.Sumatoria = db.Stocks.ToList().Sum(a => a.Cantidad); }
+                if (conteo == true) { ViewBag.Conteo = db.Stocks.ToList().Count(); }
+                if (sumatoria == true) { ViewBag.Promedio = db.Stocks.ToList().Sum(a => a.Cantidad); }
                 return View(db.Stocks.ToList());
             }
             else
@@ -36,6 +42,9 @@ namespace Sistema_de_Facturacion.Controllers
                               where b.Nombre == producto
                               orderby a.idProducto
                               select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
                     return View(abc);
                 }
                 else if (producto == string.Empty && !fecha.HasValue && proveedor != string.Empty)
@@ -45,6 +54,9 @@ namespace Sistema_de_Facturacion.Controllers
                               where b.Nombre == proveedor
                               orderby a.idProveedores
                               select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
                     return View(abc);
                 }
                 else if (producto == string.Empty && fecha.HasValue && proveedor == string.Empty)
@@ -53,6 +65,9 @@ namespace Sistema_de_Facturacion.Controllers
                               where a.Fecha == fecha
                               orderby a.Fecha
                               select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
                     return View(abc);
                 }
                 else
@@ -62,6 +77,9 @@ namespace Sistema_de_Facturacion.Controllers
                               join c in db.Proveedores on a.idProveedores equals c.id
                               where b.Nombre == producto && a.Fecha == fecha && c.Nombre == proveedor
                               select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
                     return View(abc);
                 }
             }
