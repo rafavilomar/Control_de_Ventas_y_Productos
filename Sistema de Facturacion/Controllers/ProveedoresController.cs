@@ -19,6 +19,22 @@ namespace Sistema_de_Facturacion.Controllers
         {
             return View(db.Proveedores.ToList());
         }
+        [HttpPost]
+        public ActionResult Index(string nombre, string email)
+        {
+            if (nombre == string.Empty && email == string.Empty)
+            {
+                return View(db.Proveedores.ToList());
+            }
+            else
+            {
+                var abc = from a in db.Proveedores
+                          where a.Nombre == nombre || a.Email == email
+                          orderby a.Nombre
+                          select a;
+                return View(abc);
+            }
+        }
 
         // GET: Proveedores/Details/5
         public ActionResult Details(int? id)

@@ -9,6 +9,11 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<form action="\Clientes" method="post">
+    @Html.TextBox("nombre")
+    @Html.DropDownList("categoria", new MultiSelectList(new[] { "Seleccione una categoria", "Premium", "Regular"}))
+    <input type="submit" value="BUSCAR" />
+</form>
 <table class="table">
     <tr>
         <th>
@@ -55,3 +60,6 @@
 }
 
 </table>
+<div>
+    @ViewBag.total;
+</div>

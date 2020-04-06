@@ -19,6 +19,43 @@ namespace Sistema_de_Facturacion.Controllers
         {
             return View(db.Clientes.ToList());
         }
+        [HttpPost]
+        public ActionResult Index(string nombre, string categoria)
+        {
+            if (nombre == string.Empty && categoria == "Seleccione una categoria")
+            {
+                return View(db.Clientes.ToList());
+            }
+            else
+            {
+                if (nombre == string.Empty && categoria != "Seleccione una categoria")
+                {
+                    var abc = from a in db.Clientes
+                              where a.Categoria == categoria
+                              select a;
+                    ViewBag.total = abc.Count();
+                    return View(abc);
+                }
+                else if(nombre != string.Empty && categoria == "Seleccione una categoria")
+                {
+                    var abc = from a in db.Clientes
+                              where a.Nombre == nombre
+                              select a;
+                    return View(abc);
+                }
+                else if (nombre != string.Empty && categoria != "Seleccione una categoria")
+                {
+                    var abc = from a in db.Clientes
+                              where a.Nombre == nombre && a.Categoria == categoria
+                              orderby a.Nombre
+                              select a;
+                    ViewBag.total = abc.Count();
+                    return View(abc);
+                }
+                
+                return View(db.Clientes.ToList());
+            }
+        }
 
         // GET: Clientes/Details/5
         public ActionResult Details(int? id)
