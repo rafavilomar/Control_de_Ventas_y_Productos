@@ -3,41 +3,54 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+<style>
+    
+</style>
+<div class="titulo lead">
+    <h3>Administrar productos</h3>
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<form action="\Producto" method="post">
-    <input type="text" name="busqueda" placeholder="Valor a buscar" />
-    <input type="submit" value="BUSCAR" />
-</form>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Precio)
-        </th>
-        <th></th>
-    </tr>
+<div class="consultar">
+    <form action="\Producto" method="post" class="form-inline">
+        <div class="form-group">
+            <input class="form-control" type="text" name="busqueda" placeholder="Nombre" />
+            <input class="btn btn-primary" type="submit" value="Consultar" />
+        </div>
+    </form>
+</div>
+<div class="tabla">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+</div>
+

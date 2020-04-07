@@ -4,16 +4,21 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="titulo lead">
+    <h3>Administrar Proveedores</h3>
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<form action="\Proveedores" method="post">
-    @Html.TextBox("nombre")
-    @Html.TextBox("email")
-    <input type="submit" value="BUSCAR" />
-</form>
+<div class="consultar">
+    <form action="\Proveedores" method="post" class="form-inline">
+        <input class="form-control" type="text" name="nombre" placeholder="Nombre" />
+        <input class="form-control" type="email" name="email" placeholder="Email" />
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </form>
+</div>
+<div class="tabla">
     <table class="table">
         <tr>
             <th>
@@ -47,11 +52,11 @@
                     @Html.DisplayFor(modelItem => item.RCN_Cedula)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
 
     </table>
+</div>

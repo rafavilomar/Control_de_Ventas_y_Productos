@@ -4,61 +4,66 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="titulo lead">
+    <h3>Administrar Mercancias</h3>
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<form action="\Stocks" method="post">
-    @Html.TextBox("producto")
-    @Html.TextBox("fecha")
-    @Html.TextBox("proveedor")
-    @Html.CheckBox("sumatoria", false) Sumatoria
-    @Html.CheckBox("conteo", false) Conteo
-    @Html.CheckBox("promedio", false) Promedio
-    <input type="submit" value="BUSCAR" />
-</form>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Producto.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Proveedore.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="consultar">
+    <form action="\Stocks" method="post" class="form-inline">
+        <input class="form-control" type="text" name="producto" placeholder="Nombre del Producto" />
+        <input class="form-control" type="date" name="fecha" placeholder="Fecha" />
+        <input class="form-control" type="text" name="proveedor" placeholder="Nombre del Proveedor" />
+        @Html.CheckBox("sumatoria", false) Sumatoria
+        @Html.CheckBox("conteo", false) Conteo
+        @Html.CheckBox("promedio", false) Promedio
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </form>
+</div>
+<div class="tabla">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proveedore.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producto.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Proveedore.Nombre)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proveedore.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
 <p>Sumatoria total: @ViewBag.Sumatoria</p>
 <p>Conteo total: @ViewBag.Conteo</p>
 <p>Promedio total: @ViewBag.Promedio</p>
