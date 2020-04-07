@@ -17,8 +17,11 @@ namespace Sistema_de_Facturacion.Controllers
         // GET: Stocks
         public ActionResult Index()
         {
-            var stocks = db.Stocks.Include(s => s.Producto).Include(s => s.Proveedore);
-            return View(stocks.ToList());
+            //var stocks = db.Stocks.Include(s => s.Producto).Include(s => s.Proveedore);
+            //return View(stocks.ToList());
+            var abc = from a in db.almacens
+                      select a;
+            return View(abc);
         }
         [HttpPost]
         public ActionResult Index(string producto, DateTime? fecha, string proveedor, bool sumatoria, bool conteo, bool promedio)
@@ -98,7 +101,19 @@ namespace Sistema_de_Facturacion.Controllers
             }
             return View(stock);
         }
-
+        public ActionResult Crear(int cantidad, DateTime fecha, int idproducto, int idproveedores)
+        {
+            Stock datos = new Stock
+            {
+                Cantidad = cantidad,
+                Fecha = fecha,
+                idProducto = idproducto,
+                idProveedores = idproveedores
+            };
+            db.Stocks.Add(datos);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Stocks/Create
         public ActionResult Create()
         {
@@ -118,6 +133,28 @@ namespace Sistema_de_Facturacion.Controllers
             {
                 db.Stocks.Add(stock);
                 db.SaveChanges();
+                
+                if(ViewBag.prod == stock.idProducto)
+                {
+                    var query = (from a in db.almacens
+                                 where a.idProducto == stock.idProducto
+                                 select a).FirstOrDefault();
+
+                    query.cantidad = query.cantidad + stock.Cantidad;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    almacen datos = new almacen
+                    {
+                        cantidad = stock.Cantidad,
+                        idProducto = stock.idProducto
+                    };
+                    db.almacens.Add(datos);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 

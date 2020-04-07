@@ -18,6 +18,7 @@ namespace Sistema_de_Facturacion.Models
         public Producto()
         {
             this.Stocks = new HashSet<Stock>();
+            this.almacens = new HashSet<almacen>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Sistema_de_Facturacion.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stock> Stocks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<almacen> almacens { get; set; }
     }
 }

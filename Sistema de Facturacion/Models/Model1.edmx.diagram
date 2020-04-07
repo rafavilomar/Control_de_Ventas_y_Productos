@@ -14,6 +14,8 @@
         <AssociationConnector Association="SistemaFacturacionModel.FK__Facturaci__idSto__5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaFacturacionModel.FK__Stock__idProduct__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaFacturacionModel.FK__Stock__idProveed__5070F446" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SistemaFacturacionModel.almacen" Width="1.5" PointX="3" PointY="8.75" />
+        <AssociationConnector Association="SistemaFacturacionModel.FK__almacen__idProdu__5FB337D6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -30,5 +30,6 @@ namespace Sistema_de_Facturacion.Models
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Proveedore> Proveedores { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<almacen> almacens { get; set; }
     }
 }
