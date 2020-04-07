@@ -4,18 +4,50 @@
     ViewBag.Title = "Index";
 }
 
-<div class="titulo lead">
-    <h3>Administrar Clientes</h3>
+<div class="seccion">
+    <div class="titulo lead">
+        <h4>Agregar nuevos Clientes</h4>
+    </div>
+    <form action="\Clientes/Crear" method="post" class="campos row">
+        <div class="col-sm-8 row">
+            <span class="elemento col-sm-6">
+                @Html.Label("RNC/Cedula")<br />
+                @Html.TextBox("cedula", "", new { @class = "form-control", @type = "text" })
+            </span>
+            <span class="elemento col-sm-6">
+                @Html.Label("Nombre")<br />
+                @Html.TextBox("nombre", "", new { @class = "form-control", type = "text" })
+            </span>
+            <span class="elemento col-sm-6">
+                @Html.Label("Telefono")<br />
+                @Html.TextBox("telefono", "", new { @class = "form-control", type = "number" })
+            </span>
+            <span class="elemento col-sm-6">
+                @Html.Label("Email")<br />
+                @Html.TextBox("email", "", new { @class = "form-control", type = "email" })
+            </span>
+            <span class="elemento col-sm-6">
+                @Html.Label("Categoria")<br />
+                @Html.DropDownList("categoria", new MultiSelectList(new[] { "Premium", "Regular" }), new { @class = "form-control" })
+            </span>
+        </div>
+        <div class="col-sm-4">
+            <input class="btn btn-success" type="submit" value="Agregar" />
+        </div>
+    </form>
 </div>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div class="consultar">
+<div class="seccion">
+    <div class="titulo lead">
+        <h4>Consultar clientes</h4>
+    </div>
     <form action="\Clientes" method="post" class="form-inline">
-        <input class="form-control" type="text" name="nombre" placeholder="Nombre" />
-        @Html.DropDownList("categoria", new MultiSelectList(new[] { "Seleccione una categoria", "Premium", "Regular" }) , new { @class = "form-control" })
-        <input type="submit" value="BUSCAR" class="btn btn-primary" />
+        <div class="campos">
+            <div class="form-group">
+                <input class="form-control" type="text" name="nombre" placeholder="Nombre" />
+                @Html.DropDownList("categoria", new MultiSelectList(new[] { "Seleccione una categoria", "Premium", "Regular" }), new { @class = "form-control" })
+                <input type="submit" value="Consultar" class="btn btn-primary" />
+            </div>
+        </div>
     </form>
 </div>
 <div class="tabla">

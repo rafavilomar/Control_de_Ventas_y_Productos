@@ -71,6 +71,21 @@ namespace Sistema_de_Facturacion.Controllers
             }
             return View(cliente);
         }
+        [HttpPost]
+        public ActionResult Crear(string cedula, string nombre, int telefono, string email, string categoria)
+        {
+            Cliente datos = new Cliente
+            {
+                RCN_Cedula = cedula,
+                Nombre = nombre,
+                telefono = telefono,
+                Email = email,
+                Categoria = categoria
+            };
+            db.Clientes.Add(datos);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         // GET: Clientes/Create
         public ActionResult Create()

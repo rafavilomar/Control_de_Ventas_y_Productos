@@ -4,20 +4,51 @@
     ViewBag.Title = "Index";
 }
 <style>
-    
+    .seccion {
+        border: solid 1px;
+        border-color: gray;
+        border-radius: 5px;
+        background-color: #F6F6F6;
+        margin: 10px;
+    }
+    .campos {
+        background-color: white;
+        padding: 10px;
+    }
+    .elemento{
+        margin:10px;
+    }
 </style>
-<div class="titulo lead">
-    <h3>Administrar productos</h3>
+<div class="seccion">
+    <div class="titulo lead">
+        <h4>Agregar nuevos productos</h4>
+    </div>
+    <form action="\Producto/Crear" method="post" class="campos row">
+        <div class="col-sm-8 row">
+            <span class="elemento col-sm-5">
+                @Html.Label("Nombre")<br />
+                @Html.TextBox("nombre", "", new { @class = "form-control", @type = "text" })
+            </span>
+            <span class="elemento col-sm-5">
+                @Html.Label("Precio")<br />
+                @Html.TextBox("precio", "", new { @class = "form-control", type = "number" })
+            </span>
+        </div>
+        <div class="col-sm-4">
+            <input class="btn btn-success" type="submit" value="Agregar" />
+        </div>
+    </form>
 </div>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div class="consultar">
+<div class="seccion">
+    <div class="titulo lead">
+        <h4>Consultar productos</h4>
+    </div>
     <form action="\Producto" method="post" class="form-inline">
-        <div class="form-group">
-            <input class="form-control" type="text" name="busqueda" placeholder="Nombre" />
-            <input class="btn btn-primary" type="submit" value="Consultar" />
+        <div class="campos">
+            <div class="form-group">
+                <input class="form-control" type="text" name="busqueda" placeholder="Nombre" />
+                <input class="btn btn-primary" type="submit" value="Consultar" />
+            </div>
         </div>
     </form>
 </div>

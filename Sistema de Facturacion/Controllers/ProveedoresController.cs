@@ -35,7 +35,20 @@ namespace Sistema_de_Facturacion.Controllers
                 return View(abc);
             }
         }
-
+        [HttpPost]
+        public ActionResult Crear(string cedula, string nombre, int telefono, string email)
+        {
+            Proveedore datos = new Proveedore
+            {
+                RCN_Cedula = cedula,
+                Nombre = nombre,
+                telefono = telefono,
+                Email = email
+            };
+            db.Proveedores.Add(datos);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Proveedores/Details/5
         public ActionResult Details(int? id)
         {

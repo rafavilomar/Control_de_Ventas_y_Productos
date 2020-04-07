@@ -37,6 +37,18 @@ namespace Sistema_de_Facturacion.Controllers
                 return View(abc);
             }
         }
+        [HttpPost]
+        public ActionResult Crear(string nombre, int precio)
+        {
+            Producto product = new Producto
+            {
+                Nombre = nombre,
+                Precio = precio
+            };
+            db.Productos.Add(product);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         // GET: Producto/Details/5
         public ActionResult Details(int? id)
