@@ -26,6 +26,7 @@
                 @Html.CheckBox("valorMax", false, new { @class = "form-control" }) Valor Maximo
                 @Html.CheckBox("valorMin", false, new { @class = "form-control" }) Valor Minimo
                 <input type="submit" value="Consultar" class="btn btn-primary" />
+                @Html.ActionLink("Imprimir", "Imprimir","", new { @class = "btn btn-success" })
             </div>
         </div>
     </form>
