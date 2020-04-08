@@ -8,55 +8,59 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<style>
-    body {
-        background-color: #EDF3F3;
-        font-family: sans-serif;
-    }
-    .consultar {
-        border: solid 1px;
-        border-color: gray;
-        border-radius: 5px;
-        background-color: white;
-        margin: 10px;
-    }
 
-    .tabla {
-        border: solid 1px;
-        border-color: gray;
-        border-radius: 5px;
-        background-color: #F6F6F6;
-        padding-left: 5%;
-        padding-right: 5%;
-        margin: 10px;
-        font-size: large;
-    }
-
-    .titulo {
-        padding: 5px;
-        background-color: #F6F6F6;
-        border-color: gray;
-        padding-bottom:0px;
-    }
-    .seccion {
-        border: solid 1px;
-        border-color: gray;
-        background-color: #F6F6F6;
-        margin: 10px;
-    }
-
-    .campos {
-        background-color: white;
-        padding: 10px;
-    }
-
-    .elemento {
-    }
-    .row{
-        margin:0px !important;
-    }
-</style>
 <body>
+    <style>
+        body {
+            background-color: #EDF3F3;
+            font-family: sans-serif;
+        }
+
+        .consultar {
+            border: solid 1px;
+            border-color: gray;
+            border-radius: 5px;
+            background-color: white;
+            margin: 10px;
+        }
+
+        .tabla {
+            border: solid 1px;
+            border-color: gray;
+            border-radius: 5px;
+            background-color: #F6F6F6;
+            padding-left: 5%;
+            padding-right: 5%;
+            margin: 10px;
+            font-size: large;
+        }
+
+        .titulo {
+            padding: 5px;
+            background-color: #F6F6F6;
+            border-color: gray;
+            padding-bottom: 0px;
+        }
+
+        .seccion {
+            border: solid 1px;
+            border-color: gray;
+            background-color: #F6F6F6;
+            margin: 10px;
+        }
+
+        .campos {
+            background-color: white;
+            padding: 10px;
+        }
+
+        .elemento {
+        }
+
+        .row {
+            margin: 0px !important;
+        }
+    </style>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -69,7 +73,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Facturación", "Index", "Facturacions")</li>
+                    <li>@Html.ActionLink("Facturación", "Index", "Facturas")</li>
                     <li>@Html.ActionLink("Mercancia", "Index", "Stocks")</li>
                     <li>@Html.ActionLink("Productos", "Index", "Producto")</li>
                     <li>@Html.ActionLink("Proveedores", "Index", "Proveedores")</li>

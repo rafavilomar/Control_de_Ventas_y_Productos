@@ -17,11 +17,11 @@ namespace Sistema_de_Facturacion.Controllers
         // GET: Stocks
         public ActionResult Index()
         {
-            //var stocks = db.Stocks.Include(s => s.Producto).Include(s => s.Proveedore);
-            //return View(stocks.ToList());
-            var abc = from a in db.almacens
-                      select a;
-            return View(abc);
+            var stocks = db.Stocks.Include(s => s.Producto).Include(s => s.Proveedore);
+            return View(stocks.ToList());
+            //var abc = from a in db.almacens
+              //        select a;
+            //return View(abc);
         }
         [HttpPost]
         public ActionResult Index(string producto, DateTime? fecha, string proveedor, bool sumatoria, bool conteo, bool promedio)
@@ -133,8 +133,11 @@ namespace Sistema_de_Facturacion.Controllers
             {
                 db.Stocks.Add(stock);
                 db.SaveChanges();
-                
-                if(ViewBag.prod == stock.idProducto)
+                var dato = (from a in db.almacens
+                             where a.idProducto == stock.idProducto
+                             select a).FirstOrDefault();
+
+                if (dato.idProducto == stock.idProducto)
                 {
                     var query = (from a in db.almacens
                                  where a.idProducto == stock.idProducto

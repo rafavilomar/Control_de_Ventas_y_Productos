@@ -24,6 +24,18 @@
           <Property Name="RCN_Cedula" Type="varchar" MaxLength="50" />
           <Property Name="Categoria" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="Total" Type="money" />
+          <Property Name="Importe" Type="money" />
+          <Property Name="Descuento" Type="bit" />
+          <Property Name="ITBIS" Type="money" />
+          <Property Name="idCliente" Type="int" />
+        </EntityType>
         <EntityType Name="Facturacion">
           <Key>
             <PropertyRef Name="id" />
@@ -66,6 +78,15 @@
           <Property Name="idProducto" Type="int" />
           <Property Name="idProveedores" Type="int" />
         </EntityType>
+        <EntityType Name="ventas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="idProducto" Type="int" />
+          <Property Name="idFactura" Type="int" />
+        </EntityType>
         <Association Name="FK__almacen__idProdu__5FB337D6">
           <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
           <End Role="almacen" Type="Self.almacen" Multiplicity="*" />
@@ -75,6 +96,18 @@
             </Principal>
             <Dependent Role="almacen">
               <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__idClien__628FA481">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="idCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -126,16 +159,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__ventas__idFactur__66603565">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="0..1" />
+          <End Role="ventas" Type="Self.ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ventas">
+              <PropertyRef Name="idFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ventas__idProduc__656C112C">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="ventas" Type="Self.ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ventas">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SistemaFacturacionModelStoreContainer">
           <EntitySet Name="almacen" EntityType="Self.almacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Facturacion" EntityType="Self.Facturacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ventas" EntityType="Self.ventas" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__almacen__idProdu__5FB337D6" Association="Self.FK__almacen__idProdu__5FB337D6">
             <End Role="Productos" EntitySet="Productos" />
             <End Role="almacen" EntitySet="almacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__idClien__628FA481" Association="Self.FK__Factura__idClien__628FA481">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Factura" EntitySet="Factura" />
           </AssociationSet>
           <AssociationSet Name="FK__Facturaci__idCli__534D60F1" Association="Self.FK__Facturaci__idCli__534D60F1">
             <End Role="Clientes" EntitySet="Clientes" />
@@ -153,6 +216,14 @@
             <End Role="Proveedores" EntitySet="Proveedores" />
             <End Role="Stock" EntitySet="Stock" />
           </AssociationSet>
+          <AssociationSet Name="FK__ventas__idFactur__66603565" Association="Self.FK__ventas__idFactur__66603565">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="ventas" EntitySet="ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ventas__idProduc__656C112C" Association="Self.FK__ventas__idProduc__656C112C">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="ventas" EntitySet="ventas" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -169,6 +240,7 @@
           <Property Name="RCN_Cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Categoria" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Facturacions" Relationship="Self.FK__Facturaci__idCli__534D60F1" FromRole="Clientes" ToRole="Facturacion" />
+          <NavigationProperty Name="Facturas" Relationship="SistemaFacturacionModel.FK__Factura__idClien__628FA481" FromRole="Cliente" ToRole="Factura" />
         </EntityType>
         <EntityType Name="Facturacion">
           <Key>
@@ -195,6 +267,7 @@
           <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Stocks" Relationship="Self.FK__Stock__idProduct__4F7CD00D" FromRole="Productos" ToRole="Stock" />
           <NavigationProperty Name="almacens" Relationship="SistemaFacturacionModel.FK__almacen__idProdu__5FB337D6" FromRole="Producto" ToRole="almacen" />
+          <NavigationProperty Name="ventas" Relationship="SistemaFacturacionModel.FK__ventas__idProduc__656C112C" FromRole="Producto" ToRole="venta" />
         </EntityType>
         <EntityType Name="Proveedore">
           <Key>
@@ -295,6 +368,20 @@
             <End Role="Producto" EntitySet="Productos" />
             <End Role="almacen" EntitySet="almacens" />
           </AssociationSet>
+          <EntitySet Name="Facturas" EntityType="SistemaFacturacionModel.Factura" />
+          <EntitySet Name="ventas" EntityType="SistemaFacturacionModel.venta" />
+          <AssociationSet Name="FK__Factura__idClien__628FA481" Association="SistemaFacturacionModel.FK__Factura__idClien__628FA481">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Factura" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ventas__idFactur__66603565" Association="SistemaFacturacionModel.FK__ventas__idFactur__66603565">
+            <End Role="Factura" EntitySet="Facturas" />
+            <End Role="venta" EntitySet="ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ventas__idProduc__656C112C" Association="SistemaFacturacionModel.FK__ventas__idProduc__656C112C">
+            <End Role="Producto" EntitySet="Productos" />
+            <End Role="venta" EntitySet="ventas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="almacen">
           <Key>
@@ -313,6 +400,67 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="almacen">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Importe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Descuento" Type="Boolean" />
+          <Property Name="ITBIS" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="idCliente" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="SistemaFacturacionModel.FK__Factura__idClien__628FA481" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="ventas" Relationship="SistemaFacturacionModel.FK__ventas__idFactur__66603565" FromRole="Factura" ToRole="venta" />
+        </EntityType>
+        <EntityType Name="venta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="idProducto" Type="Int32" />
+          <Property Name="idFactura" Type="Int32" />
+          <NavigationProperty Name="Factura" Relationship="SistemaFacturacionModel.FK__ventas__idFactur__66603565" FromRole="venta" ToRole="Factura" />
+          <NavigationProperty Name="Producto" Relationship="SistemaFacturacionModel.FK__ventas__idProduc__656C112C" FromRole="venta" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK__Factura__idClien__628FA481">
+          <End Type="SistemaFacturacionModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="SistemaFacturacionModel.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ventas__idFactur__66603565">
+          <End Type="SistemaFacturacionModel.Factura" Role="Factura" Multiplicity="0..1" />
+          <End Type="SistemaFacturacionModel.venta" Role="venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="venta">
+              <PropertyRef Name="idFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ventas__idProduc__656C112C">
+          <End Type="SistemaFacturacionModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="SistemaFacturacionModel.venta" Role="venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="venta">
               <PropertyRef Name="idProducto" />
             </Dependent>
           </ReferentialConstraint>
@@ -384,6 +532,29 @@
           <EntitySetMapping Name="almacens">
             <EntityTypeMapping TypeName="SistemaFacturacionModel.almacen">
               <MappingFragment StoreEntitySet="almacen">
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="SistemaFacturacionModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="ITBIS" ColumnName="ITBIS" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ventas">
+            <EntityTypeMapping TypeName="SistemaFacturacionModel.venta">
+              <MappingFragment StoreEntitySet="ventas">
+                <ScalarProperty Name="idFactura" ColumnName="idFactura" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="id" ColumnName="id" />

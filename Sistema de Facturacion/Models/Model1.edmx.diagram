@@ -16,6 +16,11 @@
         <AssociationConnector Association="SistemaFacturacionModel.FK__Stock__idProveed__5070F446" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SistemaFacturacionModel.almacen" Width="1.5" PointX="3" PointY="8.75" />
         <AssociationConnector Association="SistemaFacturacionModel.FK__almacen__idProdu__5FB337D6" />
+        <EntityTypeShape EntityType="SistemaFacturacionModel.Factura" Width="1.5" PointX="0.75" PointY="12" />
+        <EntityTypeShape EntityType="SistemaFacturacionModel.venta" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="SistemaFacturacionModel.FK__Factura__idClien__628FA481" />
+        <AssociationConnector Association="SistemaFacturacionModel.FK__ventas__idFactur__66603565" />
+        <AssociationConnector Association="SistemaFacturacionModel.FK__ventas__idProduc__656C112C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

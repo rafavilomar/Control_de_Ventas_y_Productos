@@ -12,25 +12,24 @@ namespace Sistema_de_Facturacion.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cliente
+    public partial class Factura
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cliente()
+        public Factura()
         {
-            this.Facturacions = new HashSet<Facturacion>();
-            this.Facturas = new HashSet<Factura>();
+            this.ventas = new HashSet<venta>();
         }
     
         public int id { get; set; }
-        public string Nombre { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> telefono { get; set; }
-        public string RCN_Cedula { get; set; }
-        public string Categoria { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
+        public Nullable<decimal> Total { get; set; }
+        public Nullable<decimal> Importe { get; set; }
+        public Nullable<bool> Descuento { get; set; }
+        public Nullable<decimal> ITBIS { get; set; }
+        public Nullable<int> idCliente { get; set; }
     
+        public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Facturacion> Facturacions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Factura> Facturas { get; set; }
+        public virtual ICollection<venta> ventas { get; set; }
     }
 }
