@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Sistema_de_Facturacion.Models;
-
+using Rotativa;
 namespace Sistema_de_Facturacion.Controllers
 {
     public class StocksController : Controller
@@ -33,7 +33,7 @@ namespace Sistema_de_Facturacion.Controllers
             {
                 if (sumatoria == true) { ViewBag.Sumatoria = db.Stocks.ToList().Sum(a => a.Cantidad); }
                 if (conteo == true) { ViewBag.Conteo = db.Stocks.ToList().Count(); }
-                if (sumatoria == true)
+                if (promedio == true)
                 {
                     var abc = (from a in db.Productos
                                join b in db.Stocks on a.id equals b.idProducto
@@ -45,7 +45,7 @@ namespace Sistema_de_Facturacion.Controllers
                                  select a.Precio;
                     ViewBag.f = abc.Sum();
                     ViewBag.g = precio;
-                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    ///ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
                 }
                 return View(db.Stocks.ToList());
             }
@@ -53,6 +53,12 @@ namespace Sistema_de_Facturacion.Controllers
             {
                 if (producto != string.Empty && !fecha.HasValue && proveedor == string.Empty)
                 {
+                    var datos = from a in db.Stocks
+                                join b in db.Productos on a.idProducto equals b.id
+                              where b.Nombre== producto
+                              select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = datos.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = datos.Count(); }
                     var abc = (from a in db.Productos
                                join b in db.Stocks on a.id equals b.idProducto
                                join c in db.Proveedores on b.idProveedores equals c.id
@@ -63,11 +69,17 @@ namespace Sistema_de_Facturacion.Controllers
                                  select a.Precio;
                     ViewBag.f = abc.Sum();
                     ViewBag.g = precio;
-                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
-                    return View(db.Stocks.ToList());
+                    //ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(datos);
                 }
                 else if (producto == string.Empty && !fecha.HasValue && proveedor != string.Empty)
                 {
+                    var datos = from a in db.Stocks
+                                join b in db.Proveedores on a.idProveedores equals b.id
+                                where b.Nombre == proveedor
+                                select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = datos.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = datos.Count(); }
                     var abc = (from a in db.Productos
                                join b in db.Stocks on a.id equals b.idProducto
                                join c in db.Proveedores on b.idProveedores equals c.id
@@ -78,11 +90,16 @@ namespace Sistema_de_Facturacion.Controllers
                                  select a.Precio;
                     ViewBag.f = abc.Sum();
                     ViewBag.g = precio;
-                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
-                    return View(db.Stocks.ToList());
+                    //ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(datos);
                 }
                 else if (producto == string.Empty && fecha.HasValue && proveedor == string.Empty)
                 {
+                    var datos = from a in db.Stocks
+                                where a.Fecha == fecha
+                                select a;
+                    if (sumatoria == true) { ViewBag.Sumatoria = datos.Sum(a => a.Cantidad); }
+                    if (conteo == true) { ViewBag.Conteo = datos.Count(); }
                     var abc = (from a in db.Productos
                                join b in db.Stocks on a.id equals b.idProducto
                                join c in db.Proveedores on b.idProveedores equals c.id
@@ -93,11 +110,16 @@ namespace Sistema_de_Facturacion.Controllers
                                  select a.Precio;
                     ViewBag.f = abc.Sum();
                     ViewBag.g = precio;
-                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
-                    return View(db.Stocks.ToList());
+                    //ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(datos);
                 }
                 else
                 {
+                    var datos = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b);
                     var abc = (from a in db.Productos
                                join b in db.Stocks on a.id equals b.idProducto
                                join c in db.Proveedores on b.idProveedores equals c.id
@@ -108,11 +130,16 @@ namespace Sistema_de_Facturacion.Controllers
                                  select a.Precio;
                     decimal? f = abc.Sum();
                     ViewBag.g = precio;
-                    ViewBag.Promedio = f * ViewBag.g / f;
-                    return View(db.Stocks.ToList());
+                    //ViewBag.Promedio = f * ViewBag.g / f;
+                    return View(datos);
                 }
             }
-            
+
+        }
+        public ActionResult Imprimir()
+        {
+            var print = new ActionAsPdf("Index");
+            return print;
         }
         // GET: Stocks/Details/5
         public ActionResult Details(int? id)

@@ -26,6 +26,8 @@
                 @Html.CheckBox("conteo", false, new { @class = "form-control" }) Conteo
                 @Html.CheckBox("promedio", false, new { @class = "form-control" }) Promedio
                 <input type="submit" value="Consultar" class="btn btn-primary" />
+
+                @Html.ActionLink("Imprimir", "Imprimir", "", new { @class = "btn btn-success" })
             </div>
         </div><hr />
         <div class="row">
@@ -54,10 +56,10 @@
                     @Html.DisplayNameFor(model => model.Fecha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Producto.Nombre)
+                    Producto
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Proveedore.Nombre)
+                    Proveedor
                 </th>
                 <th></th>
             </tr>

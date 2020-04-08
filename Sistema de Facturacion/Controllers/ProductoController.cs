@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Sistema_de_Facturacion.Models;
+using Rotativa;
 
 namespace Sistema_de_Facturacion.Controllers
 {
@@ -36,6 +37,12 @@ namespace Sistema_de_Facturacion.Controllers
 
                 return View(abc);
             }
+        }
+
+        public ActionResult Imprimir()
+        {
+            var print = new ActionAsPdf("Index");
+            return print;
         }
         [HttpPost]
         public ActionResult Crear(string nombre, int precio)
