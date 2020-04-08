@@ -26,66 +26,93 @@ namespace Sistema_de_Facturacion.Controllers
         [HttpPost]
         public ActionResult Index(string producto, DateTime? fecha, string proveedor, bool sumatoria, bool conteo, bool promedio)
         {
-            ViewBag.Sumatoria="";
+            ViewBag.Sumatoria = "";
             ViewBag.Conteo = "";
             ViewBag.Promedio = "";
-            if (producto == string.Empty && !fecha.HasValue && proveedor== string.Empty)
+            if (producto == string.Empty && !fecha.HasValue && proveedor == string.Empty)
             {
                 if (sumatoria == true) { ViewBag.Sumatoria = db.Stocks.ToList().Sum(a => a.Cantidad); }
                 if (conteo == true) { ViewBag.Conteo = db.Stocks.ToList().Count(); }
-                if (sumatoria == true) { ViewBag.Promedio = db.Stocks.ToList().Sum(a => a.Cantidad); }
+                if (sumatoria == true)
+                {
+                    var abc = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b.Cantidad);
+                    var precio = from a in db.Productos
+                                 where a.Nombre == producto
+                                 select a.Precio;
+                    ViewBag.f = abc.Sum();
+                    ViewBag.g = precio;
+                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                }
                 return View(db.Stocks.ToList());
             }
             else
             {
                 if (producto != string.Empty && !fecha.HasValue && proveedor == string.Empty)
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Productos on a.idProducto equals b.id
-                              where b.Nombre == producto
-                              orderby a.idProducto
-                              select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
-                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
-                    return View(abc);
+                    var abc = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b.Cantidad);
+                    var precio = from a in db.Productos
+                                 where a.Nombre == producto
+                                 select a.Precio;
+                    ViewBag.f = abc.Sum();
+                    ViewBag.g = precio;
+                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(db.Stocks.ToList());
                 }
                 else if (producto == string.Empty && !fecha.HasValue && proveedor != string.Empty)
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Proveedores on a.idProveedores equals b.id
-                              where b.Nombre == proveedor
-                              orderby a.idProveedores
-                              select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
-                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
-                    return View(abc);
+                    var abc = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b.Cantidad);
+                    var precio = from a in db.Productos
+                                 where a.Nombre == producto
+                                 select a.Precio;
+                    ViewBag.f = abc.Sum();
+                    ViewBag.g = precio;
+                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(db.Stocks.ToList());
                 }
                 else if (producto == string.Empty && fecha.HasValue && proveedor == string.Empty)
                 {
-                    var abc = from a in db.Stocks
-                              where a.Fecha == fecha
-                              orderby a.Fecha
-                              select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
-                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
-                    return View(abc);
+                    var abc = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b.Cantidad);
+                    var precio = from a in db.Productos
+                                 where a.Nombre == producto
+                                 select a.Precio;
+                    ViewBag.f = abc.Sum();
+                    ViewBag.g = precio;
+                    ViewBag.Promedio = ViewBag.f * ViewBag.g / ViewBag.f;
+                    return View(db.Stocks.ToList());
                 }
                 else
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Productos on a.idProducto equals b.id
-                              join c in db.Proveedores on a.idProveedores equals c.id
-                              where b.Nombre == producto && a.Fecha == fecha && c.Nombre == proveedor
-                              select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
-                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
-                    return View(abc);
+                    var abc = (from a in db.Productos
+                               join b in db.Stocks on a.id equals b.idProducto
+                               join c in db.Proveedores on b.idProveedores equals c.id
+                               where a.Nombre == producto || b.Fecha == fecha || c.Nombre == proveedor
+                               select b.Cantidad);
+                    var precio = from a in db.Productos
+                                 where a.Nombre == producto
+                                 select a.Precio;
+                    decimal? f = abc.Sum();
+                    ViewBag.g = precio;
+                    ViewBag.Promedio = f * ViewBag.g / f;
+                    return View(db.Stocks.ToList());
                 }
             }
+            
         }
         // GET: Stocks/Details/5
         public ActionResult Details(int? id)

@@ -4,20 +4,6 @@
     ViewBag.Title = "Index";
 }
 <style>
-    .seccion {
-        border: solid 1px;
-        border-color: gray;
-        border-radius: 5px;
-        background-color: #F6F6F6;
-        margin: 10px;
-    }
-    .campos {
-        background-color: white;
-        padding: 10px;
-    }
-    .elemento{
-        margin:10px;
-    }
 </style>
 <div class="seccion">
     <div class="titulo lead">
@@ -43,8 +29,8 @@
     <div class="titulo lead">
         <h4>Consultar productos</h4>
     </div>
-    <form action="\Producto" method="post" class="form-inline">
-        <div class="campos">
+    <form action="\Producto" method="post" class="form-inline campos row">
+        <div class="">
             <div class="form-group">
                 <input class="form-control" type="text" name="busqueda" placeholder="Nombre" />
                 <input class="btn btn-primary" type="submit" value="Consultar" />

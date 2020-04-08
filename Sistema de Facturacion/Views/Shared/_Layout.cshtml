@@ -14,6 +14,7 @@
         body {
             background-color: #EDF3F3;
             font-family: sans-serif;
+            padding-top:0px !important;
         }
 
         .consultar {
@@ -29,8 +30,6 @@
             border-color: gray;
             border-radius: 5px;
             background-color: #F6F6F6;
-            padding-left: 5%;
-            padding-right: 5%;
             margin: 10px;
             font-size: large;
         }
@@ -61,28 +60,31 @@
             margin: 0px !important;
         }
     </style>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Facturación", "Index", "Facturas")</li>
-                    <li>@Html.ActionLink("Mercancia", "Index", "Stocks")</li>
-                    <li>@Html.ActionLink("Productos", "Index", "Producto")</li>
-                    <li>@Html.ActionLink("Proveedores", "Index", "Proveedores")</li>
-                    <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Sistema de Facturación</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Facturación", "Index", "ventas","" ,new { @class="nav-link"})
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Mercancia", "Index", "Stocks","", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Productos", "Index", "Producto","", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Proveedores", "Index", "Proveedores","", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Clientes", "Index", "Clientes","", new { @class = "nav-link" })
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

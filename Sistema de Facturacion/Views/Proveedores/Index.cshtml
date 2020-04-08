@@ -37,8 +37,8 @@
     <div class="titulo lead">
         <h4>Consultar clientes</h4>
     </div>
-    <form action="\Proveedores" method="post" class="form-inline">
-        <div class="campos">
+    <form action="\Proveedores" method="post" class="form-inline campos row">
+        <div class="">
             <div class="form-group">
                 <input class="form-control" type="text" name="nombre" placeholder="Nombre" />
                 <input class="form-control" type="email" name="email" placeholder="Email" />
@@ -49,21 +49,23 @@
 </div>
 <div class="tabla">
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RCN_Cedula)
-            </th>
-            <th></th>
-        </tr>
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.telefono)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RCN_Cedula)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
         @foreach (var item in Model)
         {

@@ -1,10 +1,12 @@
-﻿@model IEnumerable<Sistema_de_Facturacion.Models.venta>
+﻿@model IEnumerable<Sistema_de_Facturacion.Models.Factura>
 
 @{
-    ViewBag.Title = "Index";
+                /**/
+
+                ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Facturacion</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,46 +15,84 @@
     <div class="titulo lead">
         <h4>Consultar Entradas</h4>
     </div>
-    <form action="\Stocks" method="post" class="form-inline">
-        <div class="campos">
+    <form action="\ventas" method="post" class="form-inline campos row">
+        <div class="">
             <div class="form-group">
-                <input class="form-control" type="text" name="producto" placeholder="Nombre del Producto" />
+                <input class="form-control" type="text" name="cliente" placeholder="Nombre del Producto" />
                 <input class="form-control" type="date" name="fecha" placeholder="Fecha" />
-                <input class="form-control" type="text" name="proveedor" placeholder="Nombre del Proveedor" />
                 @Html.CheckBox("sumatoria", false, new { @class = "form-control" }) Sumatoria
                 @Html.CheckBox("conteo", false, new { @class = "form-control" }) Conteo
                 @Html.CheckBox("promedio", false, new { @class = "form-control" }) Promedio
+                @Html.CheckBox("valorMax", false, new { @class = "form-control" }) Valor Maximo
+                @Html.CheckBox("valorMin", false, new { @class = "form-control" }) Valor Minimo
                 <input type="submit" value="Consultar" class="btn btn-primary" />
             </div>
         </div>
     </form>
+    <div class="titulo row">
+        <div class="col-sm-4">
+            <p>Sumatoria total: @ViewBag.Sumatoria</p>
+        </div>
+        <div class="col-sm-4">
+            <p>Conteo total: @ViewBag.Conteo</p>
+        </div>
+        <div class="col-sm-4">
+            <p>Promedio total: @ViewBag.Promedio</p>
+        </div>
+        <div class="col-sm-4">
+            <p>Valor Maximo: @ViewBag.ValorMax</p>
+        </div>
+        <div class="col-sm-4">
+            <p>Valor Minimo: @ViewBag.ValorMin</p>
+        </div>
+    </div>
 </div>
 <div class="tabla">
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Factura.id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producto.Nombre)
-            </th>
-            <th></th>
-        </tr>
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Importe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descuento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ITBIS)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cliente.Nombre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.cantidad)
+                    @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Factura.id)
+                    @Html.DisplayFor(modelItem => item.Total)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                    @Html.DisplayFor(modelItem => item.Importe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descuento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ITBIS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nombre)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
@@ -64,6 +104,3 @@
 
     </table>
 </div>
-<p>Sumatoria total: @ViewBag.Sumatoria</p>
-<p>Conteo total: @ViewBag.Conteo</p>
-<p>Promedio total: @ViewBag.Promedio</p>

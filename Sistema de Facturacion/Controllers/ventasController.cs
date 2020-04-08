@@ -17,69 +17,64 @@ namespace Sistema_de_Facturacion.Controllers
         // GET: ventas
         public ActionResult Index()
         {
-            var ventas = db.ventas.Include(v => v.Factura).Include(v => v.Producto);
-            return View(ventas.ToList());
+            var facturas = db.Facturas.Include(f => f.Cliente);
+            return View(facturas.ToList());
         }
         [HttpPost]
-        public ActionResult Index(string producto, DateTime? fecha, string proveedor, bool sumatoria, bool conteo, bool promedio)
+        public ActionResult Index(string cliente, DateTime? fecha, bool sumatoria, bool conteo, bool promedio, bool valorMax, bool valorMin)
         {
             ViewBag.Sumatoria = "";
             ViewBag.Conteo = "";
             ViewBag.Promedio = "";
-            if (producto == string.Empty && !fecha.HasValue && proveedor == string.Empty)
+            ViewBag.ValorMax = "";
+            ViewBag.ValorMin = "";
+            if (cliente == string.Empty && !fecha.HasValue)
             {
-                if (sumatoria == true) { ViewBag.Sumatoria = db.Stocks.ToList().Sum(a => a.Cantidad); }
-                if (conteo == true) { ViewBag.Conteo = db.Stocks.ToList().Count(); }
-                if (sumatoria == true) { ViewBag.Promedio = db.Stocks.ToList().Sum(a => a.Cantidad); }
-                return View(db.Stocks.ToList());
+                if (sumatoria == true) { ViewBag.Sumatoria = db.Facturas.ToList().Sum(a => a.Total); }
+                if (conteo == true) { ViewBag.Conteo = db.Facturas.ToList().Count(); }
+                if (sumatoria == true) { ViewBag.Promedio = db.Facturas.ToList().Average(a => a.Total); }
+                if (valorMax == true) { ViewBag.ValorMax = db.Facturas.ToList().Max(a=>a.Total); }
+                if (valorMin == true) { ViewBag.ValorMin = db.Facturas.ToList().Min(a => a.Total); }
+                return View(db.Facturas.ToList());
             }
             else
             {
-                if (producto != string.Empty && !fecha.HasValue && proveedor == string.Empty)
+                if (cliente!= string.Empty && !fecha.HasValue)
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Productos on a.idProducto equals b.id
-                              where b.Nombre == producto
-                              orderby a.idProducto
+                    var abc = from a in db.Facturas
+                              join b in db.Clientes on a.idCliente equals b.id
+                              where b.Nombre == cliente
                               select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Total); }
                     if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Average(a => a.Total); }
+                    if (valorMax == true) { ViewBag.ValorMax = abc.Max(a => a.Total); }
+                    if (valorMin == true) { ViewBag.ValorMin = abc.Min(a => a.Total); }
                     return View(abc);
                 }
-                else if (producto == string.Empty && !fecha.HasValue && proveedor != string.Empty)
+                else if (cliente == string.Empty && fecha.HasValue)
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Proveedores on a.idProveedores equals b.id
-                              where b.Nombre == proveedor
-                              orderby a.idProveedores
-                              select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
-                    if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
-                    return View(abc);
-                }
-                else if (producto == string.Empty && fecha.HasValue && proveedor == string.Empty)
-                {
-                    var abc = from a in db.Stocks
+                    var abc = from a in db.Facturas
                               where a.Fecha == fecha
-                              orderby a.Fecha
                               select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Total); }
                     if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Average(a => a.Total); }
+                    if (valorMax == true) { ViewBag.ValorMax = abc.Max(a => a.Total); }
+                    if (valorMin == true) { ViewBag.ValorMin = abc.Min(a => a.Total); }
                     return View(abc);
                 }
                 else
                 {
-                    var abc = from a in db.Stocks
-                              join b in db.Productos on a.idProducto equals b.id
-                              join c in db.Proveedores on a.idProveedores equals c.id
-                              where b.Nombre == producto && a.Fecha == fecha && c.Nombre == proveedor
+                    var abc = from a in db.Facturas
+                              join b in db.Clientes on a.idCliente equals b.id
+                              where a.Fecha == fecha & b.Nombre == cliente
                               select a;
-                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Sumatoria = abc.Sum(a => a.Total); }
                     if (conteo == true) { ViewBag.Conteo = abc.Count(); }
-                    if (sumatoria == true) { ViewBag.Promedio = abc.Sum(a => a.Cantidad); }
+                    if (sumatoria == true) { ViewBag.Promedio = abc.Average(a => a.Total); }
+                    if (valorMax == true) { ViewBag.ValorMax = abc.Max(a => a.Total); }
+                    if (valorMin == true) { ViewBag.ValorMin = abc.Min(a => a.Total); }
                     return View(abc);
                 }
             }

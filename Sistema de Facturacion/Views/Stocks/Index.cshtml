@@ -16,8 +16,8 @@
     <div class="titulo lead">
         <h4>Consultar Entradas</h4>
     </div>
-    <form action="\Stocks" method="post" class="form-inline">
-        <div class="campos">
+    <form action="\Stocks" method="post" class="form-inline campos row">
+        <div class="">
             <div class="form-group">
                 <input class="form-control" type="text" name="producto" placeholder="Nombre del Producto" />
                 <input class="form-control" type="date" name="fecha" placeholder="Fecha" />
@@ -27,51 +27,62 @@
                 @Html.CheckBox("promedio", false, new { @class = "form-control" }) Promedio
                 <input type="submit" value="Consultar" class="btn btn-primary" />
             </div>
+        </div><hr />
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Sumatoria total: @ViewBag.Sumatoria</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Conteo total: @ViewBag.Conteo</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Promedio total: @ViewBag.Promedio</p>
+            </div>
         </div>
     </form>
+    
+    
 </div>
 <div class="tabla">
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producto.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Proveedore.Nombre)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <thead class="thead-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cantidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Producto.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedore.Nombre)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Producto.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proveedore.Nombre)
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proveedore.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
 
     </table>
 </div>
-<p>Sumatoria total: @ViewBag.Sumatoria</p>
-<p>Conteo total: @ViewBag.Conteo</p>
-<p>Promedio total: @ViewBag.Promedio</p>
