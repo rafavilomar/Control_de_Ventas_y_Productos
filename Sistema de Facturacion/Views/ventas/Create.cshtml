@@ -2,7 +2,9 @@
 @model IEnumerable<Sistema_de_Facturacion.Models.venta>
 
 @{
-    ViewBag.Title = "Create";
+                /**/
+
+                ViewBag.Title = "Create";
 }
 
 
@@ -11,88 +13,93 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h2>Productos a vender</h2>
+    <div class="seccion">
+        <div class="titulo lead">
+            <h4>Productos a vender</h4>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.Label("Cantidad", htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.Editor("cantidad", new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("idProducto", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("No. Factura", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input name="idFactura" value="@ViewBag.idMax" class="form-control" readonly />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Agregar producto" class="btn btn-primary" />
+        <div class="">
+            <div class="form-inline row">
+                <div class="col-3">
+                    @Html.Label("Cantidad", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Editor("cantidad", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-3">
+                    @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownList("idProducto", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-3">
+                    @Html.Label("No. Factura", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input name="idFactura" value="@ViewBag.idMax" class="form-control" readonly />
+                </div>
+                <div class="col-3">
+                    <input type="submit" value="Agregar" class="btn btn-primary" />
+                </div>
             </div>
         </div>
     </div>
 }
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                Cantidad
-            </th>
-            <th>
-                Producto
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+    <div class="tabla">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Producto
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
-        </tr>
-    }
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 
-<hr />
-<h2>Datos de la Factura</h2>
-<hr />
 @using (Html.BeginForm("Facturar", "ventas", FormMethod.Get))
 {
-    <div class="form-group">
-        @Html.Label("Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("idCliente", null, htmlAttributes: new { @class = "form-control" })
+    <div class="seccion">
+        <div class="titulo lead">
+            <h4>Datos de la Factura</h4>
+        </div>
+        <hr />
+        <div class="">
+            <div class="form-inline row">
+                <div class="col-4">
+                    @Html.Label("Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownList("idCliente", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-4">
+                    @Html.Label("Fecha", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input name="fecha" type="date" placeholder="fecha" class="form-control" />
+                </div>
+                <div class="col-4">
+                    <input type="submit" value="Facturar" class="btn btn-primary" />
+                    @Html.ActionLink("Volver a la Lista", "Index","", new { @class = "btn btn-success" })
+                </div>
+            </div>
+            <input name="idFactura" value="@ViewBag.idMax" class="form-control" hidden />
         </div>
     </div>
-    <input name="fecha" type="date" placeholder="fecha" class="form-control" />
-    <input name="idFactura" value="@ViewBag.idMax" class="form-control" hidden />
-    <input type="submit" value="Facturar" class="btn btn-success" />
 
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
